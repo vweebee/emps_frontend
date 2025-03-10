@@ -61,7 +61,7 @@ class SignInScreen extends StatelessWidget {
                               hintText: 'Password',
                               filled: true,
                               fillColor: Color(0xFFF5FCF9),
-                              contentPadding: const EdgeInsets.symmetric(
+                              contentPadding: EdgeInsets.symmetric(
                                   horizontal: 16.0 * 1.5, vertical: 10.0),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -92,7 +92,7 @@ class SignInScreen extends StatelessWidget {
                           ),
                           child: Text("Sign In",
                               style: GoogleFonts.jacquesFrancois(
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   color: Colors.black
                               )
                           ),
