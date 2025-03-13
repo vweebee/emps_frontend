@@ -42,7 +42,7 @@ class SignInScreen extends StatelessWidget {
                             fillColor: Color(0xFFF5FCF9),
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16.0 * 1.5, vertical: 10.0),
-                            border: const OutlineInputBorder(
+                            border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius:
                               BorderRadius.all(Radius.circular(10)),
