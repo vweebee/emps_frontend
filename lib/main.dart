@@ -1,5 +1,5 @@
 import 'package:emps1/initial.dart';
-import 'package:emps1/wardrobe_top.dart';
+import 'package:emps1/wardrobe.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: WardrobeTop(),
+      home: InitialScreen(),
     );
   }
 }

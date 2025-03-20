@@ -1,11 +1,30 @@
 import 'package:emps1/sign_up.dart';
+import 'package:emps1/wardrobe.dart';
+import 'package:emps1/wardrobe_top.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignInScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
-  SignInScreen({super.key});
+  @override
+  State<SignInScreen> createState() => _SignInScreen();
+}
+
+class _SignInScreen extends State<SignInScreen> {
+  Map<int, List<File>> sectionImages = {}; // 🔹 Stores images for each section
+
+  void addImage(int section, File image) {
+    setState(() {
+      if (!sectionImages.containsKey(section)) {
+        sectionImages[section] = [];
+      }
+      sectionImages[section]!.add(image);
+    });
+  }
+
+  // SignInScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +51,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                   SizedBox(height: constraints.maxHeight * 0.05),
                   Form(
-                    key: _formKey,
+                    // key: _formKey,
                     child: Column(
                       children: [
                         TextFormField(
@@ -40,7 +59,7 @@ class SignInScreen extends StatelessWidget {
                             hintText: 'Email',
                             filled: true,
                             fillColor: Color(0xFFF5FCF9),
-                            contentPadding: const EdgeInsets.symmetric(
+                            contentPadding: EdgeInsets.symmetric(
                                 horizontal: 16.0 * 1.5, vertical: 10.0),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -78,10 +97,11 @@ class SignInScreen extends StatelessWidget {
                         const SizedBox(height: 30.0),
                         ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              // Navigate to the main screen
-                            }
+                            Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => WardrobeScreen()
+                                    )
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
