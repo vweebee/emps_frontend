@@ -6,9 +6,10 @@ import 'package:emps1/wardrobe_bottom.dart';
 import 'package:emps1/wardrobe_dress.dart';
 import 'package:emps1/wardrobe_footwear.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:emps1/generative.dart';
 import 'dart:io';
+// import 'package:emps/bottom_navigation_bar.dart' as bar;
 
 class WardrobeScreen extends StatefulWidget {
   const WardrobeScreen({super.key});
@@ -77,55 +78,11 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
             ),
           ],
         ),
-        bottomNavigationBar: const BottomNavigationBar(),
+        // bottomNavigationBar: const bar.BottomNavigationBar(),
       ),
     );
   }
 }
-
-// class AddClothesButton extends StatefulWidget {
-//   const AddClothesButton({super.key});
-//
-//   @override
-//   State<AddClothesButton> createState() => _AnimatedHoverButtonState();
-// }
-//
-// class _AnimatedHoverButtonState extends State<AddClothesButton> {
-//   double _padding = 6;
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTapDown: (details) {
-//         setState(() {
-//           _padding = 0;
-//         });
-//       },
-//       onTapUp: (details) {
-//         setState(() {
-//           _padding = 6;
-//         });
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(builder: (context) => const StarterView()), // Replace with your screen
-//         );
-//       },
-//       child: AnimatedContainer(
-//         duration: const Duration(milliseconds: 100),
-//         padding: EdgeInsets.only(bottom: _padding),
-//         decoration: BoxDecoration(
-//             color: const Color(0xE6CC4385), borderRadius: BorderRadius.circular(30)),
-//         child: Container(
-//           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-//           decoration: BoxDecoration(
-//               color: const Color(0xFFEDF9B1), borderRadius: BorderRadius.circular(30)),
-//           child: Text('ADD CLOTHES',
-//               style: GoogleFonts.jacquesFrancois(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class AddClothesButton extends StatefulWidget {
   final Function(int, File) onImageAdded; // ✅ Function to add image
@@ -264,79 +221,19 @@ class _AddClothesButtonState extends State<AddClothesButton> {
   }
 }
 
-
-
-// class TwoDListViewBuilderWidget extends StatelessWidget {
-//   const TwoDListViewBuilderWidget({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       shrinkWrap: true,
-//       itemCount: 10,
-//       itemBuilder: (context, index) {
-//         return Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Text(
-//                 'Section ${index + 1}',
-//                 style:
-//                 const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//               ),
-//             ),
-//             SizedBox(
-//               height: 150, // Height for horizontal scrollable area
-//               child: ListView.builder(
-//                 scrollDirection: Axis.horizontal,
-//                 itemCount: 10, // Number of horizontal items
-//                 itemBuilder: (context, index) {
-//                   return Container(
-//                     width: 120,
-//                     margin: const EdgeInsets.symmetric(horizontal: 8.0),
-//                     decoration: BoxDecoration(
-//                       borderRadius:
-//                       BorderRadius.circular(12), // Rounded corners
-//                       boxShadow: [
-//                         BoxShadow(
-//                           color: Colors.black.withOpacity(0.2),
-//                           blurRadius: 6,
-//                           offset:
-//                           const Offset(0, 2), // changes position of shadow
-//                         ),
-//                       ],
-//                     ),
-//                     clipBehavior: Clip.antiAlias,
-//                     child: Image.network(
-//                       'https://images.pexels.com/photos/1553783/pexels-photo-1553783.jpeg?auto=compress&cs=tinysrgb&w=600${index + 1}',
-//                       fit:
-//                       BoxFit.cover, // Ensure the image covers the container
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-// }
-
-class TwoDListViewBuilderWidget extends StatelessWidget {
+class ShowWardrobeImages extends StatelessWidget {
   final Map<int, List<File>> sectionImages; // Receive images
   final List<String> tabNames; //get tab names dynamically
 
-  const TwoDListViewBuilderWidget({super.key, required this.sectionImages, required this.tabNames});
+  const ShowWardrobeImages({super.key, required this.sectionImages, required this.tabNames});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView( // ✅ Enables vertical scrolling
+    return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(tabNames.length, (sectionIndex) {
-          // ✅ Skip sections with no images
+          //don't show section with no images
           if (sectionImages[sectionIndex] == null || sectionImages[sectionIndex]!.isEmpty) {
             return const SizedBox(); // Return an empty widget
           }
@@ -351,7 +248,7 @@ class TwoDListViewBuilderWidget extends StatelessWidget {
                   style: GoogleFonts.jacquesFrancois(fontSize: 20, fontWeight: FontWeight.bold , color: Colors.black),
                 ),
               ),
-              Wrap( // ✅ No horizontal scrolling, images wrap instead
+              Wrap(
                 spacing: 10,
                 runSpacing: 10,
                 alignment: WrapAlignment.start,
@@ -463,117 +360,3 @@ class _AnimatedRoundedTabbarFilledState
   }
 }
 
-class BottomNavigationBar extends StatefulWidget {
-  const BottomNavigationBar({super.key});
-
-  @override
-  CustomBottomBarState createState() => CustomBottomBarState();
-}
-
-class CustomBottomBarState extends State<BottomNavigationBar> {
-  final BorderRadius _borderRadius = const BorderRadius.only(
-    topLeft: Radius.circular(25),
-    topRight: Radius.circular(25),
-  );
-
-  ShapeBorder? bottomBarShape = const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(25)));
-  SnakeBarBehaviour snakeBarStyle = SnakeBarBehaviour.floating;
-  EdgeInsets padding = const EdgeInsets.all(12);
-
-  int _selectedItemPosition = 2;
-  SnakeShape snakeShape = SnakeShape.circle;
-
-  bool showSelectedLabels = false;
-  bool showUnselectedLabels = false;
-
-  Color selectedColor = Color(0xE6CC4385);
-  Color unselectedColor = Colors.black;
-
-  Gradient selectedGradient =
-  const LinearGradient(colors: [Color(0xE6CC4385), Color(0xFFC1DB3C)]);
-  Gradient unselectedGradient =
-  const LinearGradient(colors: [Color(0xE6CC4385), Colors.black]);
-
-  Color? containerColor;
-  List<Color> containerColors = [
-    const Color(0xFFC1DB3C),
-    const Color(0xFFC1DB3C),
-    const Color(0xFFC1DB3C),
-    const Color(0xFFC1DB3C),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SnakeNavigationBar.color(
-      behaviour: snakeBarStyle,
-      snakeShape: snakeShape,
-      shape: bottomBarShape,
-      padding: padding,
-      snakeViewColor: selectedColor,
-      selectedItemColor:
-      snakeShape == SnakeShape.indicator ? selectedColor : null,
-      unselectedItemColor: unselectedColor,
-      showUnselectedLabels: showUnselectedLabels,
-      showSelectedLabels: showSelectedLabels,
-      currentIndex: _selectedItemPosition,
-      onTap: (index) => setState(() => _selectedItemPosition = index),
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.checkroom), label: 'Wardrobe'),
-        BottomNavigationBarItem(icon: Icon(Icons.accessibility_new), label: 'Generate'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
-      ],
-      selectedLabelStyle: const TextStyle(fontSize: 14),
-      unselectedLabelStyle: const TextStyle(fontSize: 10),
-      backgroundColor: const Color(0xFFC1DB3C),
-    );
-  }
-
-  void _onPageChanged(int page) {
-    containerColor = containerColors[page];
-    switch (page) {
-      case 0:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.floating;
-          snakeShape = SnakeShape.circle;
-          padding = const EdgeInsets.all(12);
-          bottomBarShape =
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25));
-          showSelectedLabels = false;
-          showUnselectedLabels = false;
-        });
-        break;
-      case 1:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.pinned;
-          snakeShape = SnakeShape.circle;
-          padding = EdgeInsets.zero;
-          bottomBarShape = RoundedRectangleBorder(borderRadius: _borderRadius);
-          showSelectedLabels = false;
-          showUnselectedLabels = false;
-        });
-        break;
-
-      case 2:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.pinned;
-          snakeShape = SnakeShape.rectangle;
-          padding = EdgeInsets.zero;
-          bottomBarShape = BeveledRectangleBorder(borderRadius: _borderRadius);
-          showSelectedLabels = true;
-          showUnselectedLabels = true;
-        });
-        break;
-      case 3:
-        setState(() {
-          snakeBarStyle = SnakeBarBehaviour.pinned;
-          snakeShape = SnakeShape.indicator;
-          padding = EdgeInsets.zero;
-          bottomBarShape = null;
-          showSelectedLabels = false;
-          showUnselectedLabels = false;
-        });
-        break;
-    }
-  }
-}

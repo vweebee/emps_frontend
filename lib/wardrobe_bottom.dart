@@ -22,8 +22,8 @@ class BottomPage extends StatelessWidget {
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0), // ✅ Add padding to align with left
-            child: TwoDListViewBuilderWidget(sectionImages: sectionImages, tabNames: tabNames,),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: ShowWardrobeImages(sectionImages: sectionImages, tabNames: tabNames,),
           ),
         ),
       ],
