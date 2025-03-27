@@ -1,3 +1,4 @@
+import 'package:emps1/main_screen.dart';
 import 'package:emps1/sign_up.dart';
 import 'package:emps1/wardrobe.dart';
 import 'package:emps1/wardrobe_top.dart';
@@ -99,7 +100,7 @@ class _SignInScreen extends State<SignInScreen> {
                           onPressed: () {
                             Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (context) => WardrobeScreen()
+                                    builder: (context) => MainScreen()
                                     )
                             );
                           },
@@ -118,22 +119,6 @@ class _SignInScreen extends State<SignInScreen> {
                           ),
                         ),
                         const SizedBox(height: 5.0),
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   child: Text(
-                        //     'Forgot Password?',
-                        //     style: Theme.of(context)
-                        //         .textTheme
-                        //         .bodyMedium!
-                        //         .copyWith(
-                        //       color: Theme.of(context)
-                        //           .textTheme
-                        //           .bodyLarge!
-                        //           .color!
-                        //           .withOpacity(0.64),
-                        //     ),
-                        //   ),
-                        // ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(

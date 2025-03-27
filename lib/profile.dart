@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:io';
+import 'package:emps1/profile_changePassword.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -121,15 +122,23 @@ class ProfileScreenState extends State<ProfileScreen> {
             // ✅ Username & Edit Icon (Positioned Next to Profile Picture)
             Positioned(
               top: 70,
-              left: 185, // Positioned right of profile picture
+              left: 182, // Positioned right of profile picture
               child: Row(
                 children: [
-                  Text(
-                    _usernameController.text,
-                    style: GoogleFonts.jacquesFrancois(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: 160, // Fixed width for consistency
+                    child: TextField(
+                      controller: _usernameController,
+                      readOnly: _isReadOnly, // Controlled Read-Only State
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(color: Colors.black54),
+                      ),
+                      style: GoogleFonts.jacquesFrancois(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SizedBox(width: 5),
@@ -166,7 +175,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                       Text("Male", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 16)),
                     ],
                   ),
-                  SizedBox(width: 15),
+                  SizedBox(width: 10),
                   Row(
                     children: [
                       Radio<String>(
@@ -190,16 +199,133 @@ class ProfileScreenState extends State<ProfileScreen> {
       ),
 
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 55),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 55),
         child: Column(
           children: [
             MembershipCard(),
             SizedBox(height: 50),
-            const Divider(),
+            const Divider(
+              height: 5, // Space above and below the divider
+              thickness: 2, // Divider thickness (makes it bold)
+              color: Colors.black45, // Change color if needed
+            ),
             Form(
               child: Column(
                 children: [
-
+                  SizedBox(height: 35),
+                  Text('Account Information',
+                    style: GoogleFonts.jacquesFrancois(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    height: 45,
+                    width: 250,
+                    // padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEDF9B1), // dark color similar to the image
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Center(
+                      child: Text('EMPS@gmail.com',
+                        style: GoogleFonts.jacquesFrancois(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    )
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: const Color(0xFFEDF9B1),
+                      foregroundColor: Colors.black,
+                      minimumSize: const Size(250, 45),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Text("Change Password",
+                        style: GoogleFonts.jacquesFrancois(
+                            fontSize: 20,
+                            color: Colors.black
+                        )
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 35),
+            const Divider(
+              height: 35, // Space above and below the divider
+              thickness: 2, // Divider thickness (makes it bold)
+              color: Colors.black45, // Change color if needed
+            ),
+            Positioned(
+              // top: 105,
+              // left: 165, // Aligned with username
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(width: 10),
+                      Icon(Icons.file_copy, size: 80, color: Colors.black54),
+                      SizedBox(width: 10),
+                      Text("Terms & Conditions", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 24)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.chevron_right, size: 60, color: Colors.black54),
+                        onPressed: () {
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            const Divider(
+              height: 35, // Space above and below the divider
+              thickness: 2, // Divider thickness (makes it bold)
+              color: Colors.black45, // Change color if needed
+            ),
+            Positioned(
+              // top: 105,
+              // left: 165, // Aligned with username
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(width: 10),
+                      Icon(Icons.logout, size: 80, color: Colors.black54),
+                      SizedBox(width: 10),
+                      Text("Log Out", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 24)),
+                    ],
+                  ),
+                  SizedBox(width: 134),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.chevron_right, size: 60 ,color: Colors.black54),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChangePasswordScreen(profileImage: _profileImage),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -230,7 +356,7 @@ class MembershipCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                ' 12',
+                '  0',
                 style: GoogleFonts.jacquesFrancois(
                   color: Colors.black,
                   fontSize: 27.0,
@@ -238,7 +364,7 @@ class MembershipCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '45   ',
+                '0   ',
                 style: GoogleFonts.jacquesFrancois(
                   color: Colors.black,
                   fontSize: 27.0,
@@ -271,32 +397,3 @@ class MembershipCard extends StatelessWidget {
   }
 }
 
-class UserInfoEditField extends StatelessWidget {
-  const UserInfoEditField({
-    super.key,
-    required this.text,
-    required this.child,
-  });
-
-  final String text;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0 / 2),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Text(text),
-          ),
-          Expanded(
-            flex: 3,
-            child: child,
-          ),
-        ],
-      ),
-    );
-  }
-}

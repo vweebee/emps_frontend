@@ -4,7 +4,7 @@ import 'package:emps1/generative_new.dart';
 import 'package:emps1/generative_looks.dart';
 
 class GenerativeScreen extends StatefulWidget {
-  const GenerativeScreen({super.key});
+  const GenerativeScreen({Key? key}) : super(key: key);
 
   @override
   State<GenerativeScreen> createState() => _GenerativeScreenState();
@@ -12,13 +12,26 @@ class GenerativeScreen extends StatefulWidget {
 
 class _GenerativeScreenState extends State<GenerativeScreen> {
   int _currentIndex = 0;
+  bool _showOutfitView = false;
 
   // Create instances once to preserve their state
-  final List<Widget> _screens = [
-    const GenerativeHome(),
-    const GenerativeNewScreen(),
-    const GenerativeHistoryScreen(),
-  ];
+  late List<Widget> _screens;
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      const GenerativeHome(),
+      GenerativeNewScreen(
+        onOutfitViewChanged: (bool value) {
+          setState(() {
+            _showOutfitView = value;
+          });
+        },
+      ),
+      const GenerativeHistoryScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +111,8 @@ class _GenerativeScreenState extends State<GenerativeScreen> {
           ],
 
           // Back button for NEW and HISTORY screens
-          if (_currentIndex != 0)
+          // Modified to hide when _showOutfitView is true
+          if (_currentIndex != 0 && !_showOutfitView)
             Positioned(
               top: 67,
               left: 5,
@@ -120,7 +134,7 @@ class _GenerativeScreenState extends State<GenerativeScreen> {
 
 // Add this new widget for the home screen
 class GenerativeHome extends StatelessWidget {
-  const GenerativeHome({super.key});
+  const GenerativeHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +146,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const CustomButton({super.key, required this.text, required this.onPressed});
+  const CustomButton({required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

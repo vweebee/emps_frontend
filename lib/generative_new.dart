@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:emps1/CustomBottomBar.dart';
 import 'package:emps1/wardrobe.dart';
+// import 'package:flutter_gl/flutter_gl.dart';
 
 class GenerativeNewScreen extends StatefulWidget {
   final Function(bool)? onOutfitViewChanged;
@@ -175,62 +176,51 @@ class _GenerativeNewScreenState extends State<GenerativeNewScreen> {
           child: Container(color: Colors.white),
         ),
 
-        // Top green bar with style name
+        // Parabolic painter for header
         Positioned(
-          top: 0,
+            top: 0,
+            left: 0,
+            child: CustomPaint(
+              size: Size(screenWidth, 300),
+              painter: ParabolicPainter(),
+            )
+        ),
+
+        // Back button
+        Positioned(
+          top: 67,
+          left: 5,
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back, size: 50),
+            color: Color(0xFFCC4385), // Changed to white for visibility on green background
+            onPressed: () {
+              setState(() {
+                _showOutfitView = false; // Return to style selection
+              });
+            },
+          ),
+        ),
+
+        // Style name
+        Positioned(
+          top: 80,
           left: 0,
           right: 0,
-          bottom: 755,
-          child: Container(
-            height: 60,
-            color: const Color(0xFFC1DB3C),
-            child: Row(
-              children: [
-                // Back button
-                GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _showOutfitView = false; // Go back to style selection
-                      });
-                    },
-                    child:
-                    Positioned(
-                      top: 67,
-                      left: 5,
-                      child: Container(
-                        padding: const EdgeInsets.all(15),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.pink,
-                          size: 0,
-                        ),
-                      ),
-                    )
-                ),
-
-                // Style name
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      _selectedStyle,
-                      style: GoogleFonts.jacquesFrancois(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Empty space to balance the layout
-                const SizedBox(width: 60),
-              ],
+          child: Center(
+            child: Text(
+              _selectedStyle,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.jacquesFrancois(
+                fontSize: 30,
+                color: Colors.black, // Changed to white for visibility
+              ),
             ),
           ),
         ),
 
         // Mannequin and outfit items
         Positioned(
-          top: 80,
+          top: 180, // Adjusted to be below the parabolic header
           left: 0,
           right: 0,
           bottom: 70,
@@ -238,16 +228,14 @@ class _GenerativeNewScreenState extends State<GenerativeNewScreen> {
             child: Column(
               children: [
                 // Mannequin image
-                Container(
-                  height: 300,
-                  width: screenWidth,
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/mannequin.png', // Make sure to add this asset
-                    fit: BoxFit.contain,
-                    height: 280,
-                  ),
-                ),
+                // Container(
+                //   height: 300,
+                //   width: screenWidth,
+                //   alignment: Alignment.center,
+                //   child: ModelViewerSection(
+                //     modelPath: 'assets/kawashaki_ninja_h2.glb',
+                //   ),
+                // ),
 
                 // Outfit item placeholders
                 ...List.generate(4, (index) =>
@@ -326,3 +314,23 @@ class ParabolicPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
+
+// class ModelViewerSection extends StatelessWidget {
+//   final String modelPath;
+
+//   const ModelViewerSection({
+//     Key? key,
+//     required this.modelPath,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ModelViewer(
+//       src: modelPath, // Use asset path
+//       alt: "A 3D mannequin model",
+//       ar: true,
+//       autoRotate: false,
+//       cameraControls: false,
+//     );
+//   }
+// }
