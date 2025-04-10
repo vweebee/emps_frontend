@@ -19,7 +19,7 @@ class MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     const WardrobeScreen(),   // Wardrobe
     const GenerativeScreen(), // Generate
-    ProfileScreen(), // Profile placeholder
+    const ProfileScreen(), // Profile placeholder
   ];
 
   void _onItemTapped(int index) {

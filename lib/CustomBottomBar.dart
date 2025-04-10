@@ -18,7 +18,7 @@ class CustomBottomBar extends StatelessWidget {
       behaviour: SnakeBarBehaviour.floating,
       snakeShape: SnakeShape.circle,
       padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 12),  // Increase vertical padding to make it taller
-      snakeViewColor: const Color(0xE6CC4385),
+      snakeViewColor: const Color(0xFFCC4385),
       selectedItemColor: selectedIndex == 1 ? const Color.fromARGB(230, 255, 255, 255) : null,
       unselectedItemColor: Colors.black,
       showUnselectedLabels: false,
