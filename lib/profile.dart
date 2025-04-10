@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:io';
 import 'package:emps1/profile_changePassword.dart';
+import 'package:emps1/profile_termsandconditions.dart';
+import 'package:emps1/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +20,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _usernameController = TextEditingController();
   bool _isReadOnly = true;
   String? _selectedGender;
+  OverlayEntry? _overlayEntry;
 
   // Function to pick an image
   Future<void> _pickImage(ImageSource source) async {
@@ -88,6 +91,82 @@ class ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _usernameController.text = _generateRandomUsername(); // ✅ Set random username at startup
+  }
+
+  //overlay function
+  void _showOverlay() {
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 450,
+        left: 50,
+        right: 50,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color(0xFFC1DB3C),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(color: Colors.black45, blurRadius: 10, offset: Offset(0, 5))
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Log out?',
+                  style: GoogleFonts.jacquesFrancois(fontSize: 24, color: Colors.black),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        _overlayEntry?.remove();
+                        _overlayEntry = null;
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: const Color(0xFFCC4385),
+                        foregroundColor: Colors.black,
+                        minimumSize: const Size(48, 52),
+                        shape: const StadiumBorder(),
+                      ),
+                      child: Text("Cancel", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 20)),
+                    ),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        _overlayEntry?.remove();
+                        _overlayEntry = null;
+
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => SignInScreen()
+                            )
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: const Color(0xFFEDF9B1),
+                        foregroundColor: Colors.black,
+                        minimumSize: const Size(48, 52),
+                        shape: const StadiumBorder(),
+                      ),
+                      child: Text("Log Out", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 20)),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(_overlayEntry!);
   }
 
   @override
@@ -241,6 +320,11 @@ class ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ChangePasswordScreen(profileImage: _profileImage),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -267,30 +351,24 @@ class ProfileScreenState extends State<ProfileScreen> {
               thickness: 2, // Divider thickness (makes it bold)
               color: Colors.black45, // Change color if needed
             ),
-            Positioned(
-              // top: 105,
-              // left: 165, // Aligned with username
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(width: 10),
-                      Icon(Icons.file_copy, size: 80, color: Colors.black54),
-                      SizedBox(width: 10),
-                      Text("Terms & Conditions", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 24)),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.chevron_right, size: 60, color: Colors.black54),
-                        onPressed: () {
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+
+            Row(
+              children: [
+                SizedBox(width: 10),
+                Icon(Icons.file_copy, size: 80, color: Colors.black54),
+                SizedBox(width: 10),
+                Text("Terms & Conditions", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 24)),
+                IconButton(
+                  icon: Icon(Icons.chevron_right, size: 60, color: Colors.black54),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => TermsAndConditionsScreen()
+                        )
+                    );
+                  },
+                ),
+              ],
             ),
             SizedBox(height: 10),
             const Divider(
@@ -298,36 +376,24 @@ class ProfileScreenState extends State<ProfileScreen> {
               thickness: 2, // Divider thickness (makes it bold)
               color: Colors.black45, // Change color if needed
             ),
-            Positioned(
-              // top: 105,
-              // left: 165, // Aligned with username
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(width: 10),
-                      Icon(Icons.logout, size: 80, color: Colors.black54),
-                      SizedBox(width: 10),
-                      Text("Log Out", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 24)),
-                    ],
-                  ),
-                  SizedBox(width: 134),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.chevron_right, size: 60 ,color: Colors.black54),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ChangePasswordScreen(profileImage: _profileImage),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            Row(
+              children: [
+                SizedBox(width: 10),
+                Icon(Icons.logout, size: 80, color: Colors.black54),
+                SizedBox(width: 10),
+                Text("Log Out", style: GoogleFonts.jacquesFrancois(color: Colors.black, fontSize: 24)),
+                SizedBox(width: 134),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.chevron_right, size: 60 ,color: Colors.black54),
+                      onPressed: () {
+                        _showOverlay();
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

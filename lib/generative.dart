@@ -4,7 +4,7 @@ import 'package:emps1/generative_new.dart';
 import 'package:emps1/generative_looks.dart';
 
 class GenerativeScreen extends StatefulWidget {
-  const GenerativeScreen({Key? key}) : super(key: key);
+  const GenerativeScreen({super.key});
 
   @override
   State<GenerativeScreen> createState() => _GenerativeScreenState();
