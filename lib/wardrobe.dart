@@ -115,11 +115,11 @@ class _AddClothesButtonState extends State<AddClothesButton> {
   Future<void> _showImageSourcePicker() async {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent, // Makes the corners smooth
+      backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFEDF9B1), // Change this to your desired background color
+            color: const Color(0xFFEDF9B1),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
