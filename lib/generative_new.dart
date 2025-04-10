@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:emps1/CustomBottomBar.dart';
 import 'package:emps1/wardrobe.dart';
-// import 'package:flutter_gl/flutter_gl.dart';
+import 'package:object_3d/object_3d.dart';
+import 'package:flutter_cube/flutter_cube.dart';
 
 class GenerativeNewScreen extends StatefulWidget {
   final Function(bool)? onOutfitViewChanged;
@@ -169,6 +170,10 @@ class _GenerativeNewScreenState extends State<GenerativeNewScreen> {
 
   // Outfit View
   Widget buildOutfitView(double screenWidth) {
+    Vector3 TrouserScale = Vector3(0.3, 0.32, 0.3);
+    Vector3 TrouserPosition = Vector3(0, -0.07, -0.005);
+    Vector3 SweaterScale = Vector3(0.5, 0.52, 0.55);
+    Vector3 SweaterPosition = Vector3(0, -0.075, -0.005);
     return Stack(
       children: [
         // White background
@@ -194,9 +199,11 @@ class _GenerativeNewScreenState extends State<GenerativeNewScreen> {
             icon: const Icon(Icons.arrow_back, size: 50),
             color: Color(0xFFCC4385), // Changed to white for visibility on green background
             onPressed: () {
-              setState(() {
-                _showOutfitView = false; // Return to style selection
-              });
+              if (mounted) {
+                setState(() {
+                  _showOutfitView = false;
+                });
+              }
             },
           ),
         ),
@@ -227,18 +234,7 @@ class _GenerativeNewScreenState extends State<GenerativeNewScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Mannequin image
-                // Container(
-                //   height: 300,
-                //   width: screenWidth,
-                //   alignment: Alignment.center,
-                //   child: ModelViewerSection(
-                //     modelPath: 'assets/kawashaki_ninja_h2.glb',
-                //   ),
-                // ),
-
-                // Outfit item placeholders
-                ...List.generate(4, (index) =>
+                ...List.generate(8, (index) =>
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                       height: 80,
@@ -252,6 +248,52 @@ class _GenerativeNewScreenState extends State<GenerativeNewScreen> {
               ],
             ),
           ),
+        ),
+        
+        Positioned(
+          top: 560,
+          left: 10,
+          right: 10,
+          bottom: 10,
+          child: Container(
+            color: Colors.red,
+            child: Cube(
+              onSceneCreated: (Scene scene) {
+                // First object
+                final obj1 = Object(
+                  fileName: 'assets/untitled1.obj',
+                  position: Vector3(0, -0.25, 0),
+                  scale: Vector3(1, 1, 1),
+                  lighting: false,
+                  backfaceCulling: false,
+                  visiable: true
+                );
+                
+                // Second object - mesh.obj
+                Object obj2 = Object(
+                  fileName: 'assets/mesh.obj',
+                  position: Vector3(0, -0.075, -0.005), // Same position as first object
+                  scale: Vector3(0.5, 0.52, 0.55),        // Same scale as first object
+                  lighting: true,
+                  visiable: false
+                );
+                
+                Object obj3 = Object(
+                  fileName: 'assets/skirt.obj',
+                  position: Vector3(0, -0.45, -0.01),
+                  scale: Vector3(1.2, 1, 1),
+                  lighting: true,
+                  backfaceCulling: false,
+                  visiable: true
+                );
+
+                scene.world.add(obj1);
+                scene.world.add(obj2);
+                scene.world.add(obj3);
+                scene.camera.zoom = 20;
+              },
+            ),
+          )
         )
       ],
     );
